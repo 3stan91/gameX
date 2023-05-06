@@ -17,10 +17,10 @@ void loadGame(Creature creature, std::string path) {
             creature.setHealth(health);
             int damage;
             fin.read((char *) &damage, sizeof(damage));
-            creature.setHealth(damage);
+            creature.setDamage(damage);
             int armor;
             fin.read((char *) &armor, sizeof(armor));
-            creature.setHealth(armor);
+            creature.setArmor(armor);
             int x, y;
             fin.read((char *) &x, sizeof(x));
             creature.coordinate.x = x;
@@ -33,5 +33,6 @@ void loadGame(Creature creature, std::string path) {
     }
 
     fin.close();
+    return;
 }
 

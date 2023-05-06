@@ -81,6 +81,7 @@ public:
             coordinate.x = std::rand() % 20;
             coordinate.y = std::rand() % 20;
         }
+        return;
     }
 
     void move(std::vector<char> &dataCreature, Coordinate &dataCoordinate, char direction) {
@@ -104,6 +105,7 @@ public:
                 dataCoordinate.x = 19;
             dataCoordinate.x++;
         }
+        return;
     }
 
     void moveEnemy(std::vector<char> &dataCreature, Coordinate &dataCoordinate) {
@@ -121,6 +123,7 @@ public:
         if (direction == 3) {
             coordinate.x++;
         }
+        return;
     }
 };
 
