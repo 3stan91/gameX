@@ -197,26 +197,43 @@ int main() {
 #include "coordinate.h"
 #include "creature.h"
 #include <vector>
+#include <fstream>
 #include <unistd.h>
 
 void welcome();
 
 void showGameField(std::vector<char> &dataCreature, std::vector<Coordinate> &dataCoordinate);
 
-void pauseScreen(Creature creature);
+void saveGame(Creature creature, std::string);
+
+void loadGame(Creature creature, std::string path);
+
+inline bool isFileExist(const char *fileName) {
+    std::ifstream infile(fileName);
+    return infile.good();
+}
 
 int main() {
     //welcome();
     //sleep(1);
-   // system("cls");
+    // system("cls");
 
     Creature enemy[5];
-    for (int i = 0; i < 5; ++i) {
-        enemy[i].create('E', i);
+    if (!isFileExist("Enemies.bin")) {
+        for (int i = 0; i < 5; ++i)
+            enemy[i].create('E', i);
+    } else {
+        for (int i = 0; i < 5; ++i)
+            loadGame(enemy[i], "Enemies.bin");
     }
 
     Creature personage;
-    personage.create('P');
+    if (!isFileExist("Personage.bin")) {
+        personage.create('P');
+    } else {
+        loadGame(personage, "Personage.bin");
+    }
+
 
     std::vector<char> dataCreature;
     std::vector<Coordinate> dataCoordinate;
@@ -241,8 +258,18 @@ int main() {
         system("cls");
         personage.move(dataCreature, dataCoordinate[0], key);
         showGameField(dataCreature, dataCoordinate);
-        if (key == 'p')
-            pauseScreen(personage);
+
+        if (key = 'q') {
+            const std::string path[]{"Enemies.bin", "Personage.bin"};
+            try {
+                for (int i = 0; i < 5; i++)
+                    saveGame(enemy[i], path[0]);
+                saveGame(personage, path[1]);
+            }
+            catch (const std::string &s) {
+                std::cerr << "Exception write file";
+            }
+        }
     } while (key != 'q');
 
     return 0;

@@ -83,7 +83,7 @@ public:
         }
     }
 
-    char move(std::vector<char> &dataCreature, Coordinate &dataCoordinate, char direction) {
+    void move(std::vector<char> &dataCreature, Coordinate &dataCoordinate, char direction) {
         if (direction == 'w') {
             if (dataCoordinate.y < 0)
                 dataCoordinate.y = 0;
