@@ -88,28 +88,22 @@ public:
             if (dataCoordinate.y < 0)
                 dataCoordinate.y = 0;
             dataCoordinate.y--;
-            //showGameField(dataCreature, dataCoordinate);
-            //showGameField(dataCoordinate, 'P');
         }
         if (direction == 's') {
             if (dataCoordinate.y > 19)
                 dataCoordinate.y = 19;
             dataCoordinate.y++;
-            //showGameField(dataCoordinate, 'P');
         }
         if (direction == 'a') {
             if (dataCoordinate.x < 0)
                 dataCoordinate.x = 0;
             dataCoordinate.x--;
-            //showGameField(dataCoordinate, 'P');
         }
         if (direction == 'd') {
             if (dataCoordinate.x > 19)
                 dataCoordinate.x = 19;
             dataCoordinate.x++;
-            //showGameField(dataCoordinate, 'P');
         }
-        //showGameField(dataCreature, dataCoordinate);
     }
 
     void moveEnemy(std::vector<char> &dataCreature, Coordinate &dataCoordinate) {
@@ -117,21 +111,16 @@ public:
         int direction = rand() % 4;
         if (direction == 0) {
             dataCoordinate.y--;
-           // showGameField(dataCoordinate);
         }
         if (direction == 1) {
             coordinate.y++;
-           // showGameField(dataCoordinate);
         }
         if (direction == 2) {
             coordinate.x--;
-            //showGameField(dataCoordinate);
         }
         if (direction == 3) {
             coordinate.x++;
-            //showGameField(dataCoordinate);
         }
-        //showGameField(dataCreature, dataCoordinate);
     }
 };
 
