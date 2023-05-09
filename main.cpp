@@ -224,7 +224,7 @@ int main() {
    // sleep(1);
     // system("cls");
     constexpr short countEnemies = 5;
-    srand(std::time(nullptr));
+    srand(static_cast<unsigned int>(std::time(nullptr)));
     Creature enemies[countEnemies];
     if (!isFileExist("Enemies.bin")) {
     for (int i = 0; i < countEnemies; ++i)

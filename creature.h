@@ -110,7 +110,6 @@ public:
             else
                 this->coordinate.x++;
         }
-        return;
     }
 
     void generateDirection(Creature *creature) {
@@ -131,7 +130,6 @@ public:
                 break;
         }
         move(direction, creature);
-        return;
     }
 
     bool doDamage(Creature *creature) {
