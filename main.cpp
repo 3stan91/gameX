@@ -202,9 +202,9 @@ int main() {
 #include <cstdlib>
 #include <unistd.h>
 
-//void welcome();
+void welcome();
 
-void showGameField(std::vector<char> &dataCreature, std::vector<Coordinate> &dataCoordinate);
+void showGameField(const std::vector<char> &dataCreature, std::vector<Coordinate> &dataCoordinate);
 
 void saveGame(Creature creature, std::string);
 
@@ -220,61 +220,61 @@ void updateCoordinates(std::vector<Coordinate> &coordinate, int position, Creatu
 }
 
 int main() {
-    //welcome();
-    //sleep(1);
+    welcome();
+    sleep(1);
     // system("cls");
     constexpr short countEnemies = 5;
-    srand(std::time(0));
-    Creature enemy[countEnemies];
-    //if (!isFileExist("Enemies.bin")) {
+    srand(std::time(nullptr));
+    Creature enemies[countEnemies];
+    if (!isFileExist("Enemies.bin")) {
     for (int i = 0; i < countEnemies; ++i)
-        enemy[i].create('E', i);
-    // } else {
-    //     for (int i = 0; i < countEnemies; ++i)
-    //         loadGame(enemy[i], "Enemies.bin");
-    // }
+        enemies[i].create('E', i);
+     } else {
+         for (int i = 0; i < countEnemies; ++i)
+             loadGame(enemies[i], "Enemies.bin");
+    }
 
-    Creature personage;
-    //  if (!isFileExist("Personage.bin")) {
-    personage.create('P');
-    //   } else {
-    //    loadGame(personage, "Personage.bin");
-    // }
+    Creature player;
+      if (!isFileExist("Personage.bin")) {
+    player.create('P');
+       } else {
+        loadGame(player, "Personage.bin");
+    }
 
     std::vector<char> dataCreature;
     std::vector<Coordinate> dataCoordinate;
 
     dataCreature.push_back('P');
-    dataCoordinate.push_back(personage.coordinate);
+    dataCoordinate.push_back(player.coordinate);
     for (int i = 0; i < countEnemies; i++) {
         dataCreature.push_back('E');
-        dataCoordinate.push_back(enemy[i].coordinate);
+        dataCoordinate.push_back(enemies[i].coordinate);
     }
 
     showGameField(dataCreature, dataCoordinate);
-    std::cout << "+++++++++++++++++++++++++\n";
+    std::cout << std::endl;
     char direction;
     int index = 0;
     do {
         while (index < countEnemies) {
-            enemy[index].generateDirection();
-            updateCoordinates(dataCoordinate, index + 1, &enemy[index]);
+            enemies[index].generateDirection();
+            updateCoordinates(dataCoordinate, index + 1, &enemies[index]);
             index++;
         }
 
         showGameField(dataCreature, dataCoordinate);
         std::cin >> direction;
         //system("cls");
-        personage.move(direction);
-        updateCoordinates(dataCoordinate, 0, &personage);
+        player.move(direction);
+        updateCoordinates(dataCoordinate, 0, &player);
         showGameField(dataCreature, dataCoordinate);
 
         if (direction = 'q') {
             const std::string path[]{"Enemies.bin", "Personage.bin"};
             try {
                 for (int i = 0; i < countEnemies; i++)
-                    saveGame(enemy[i], path[0]);
-                saveGame(personage, path[1]);
+                    saveGame(enemies[i], path[0]);
+                saveGame(player, path[1]);
             }
             catch (const std::string &s) {
                 std::cerr << "Exception write file";

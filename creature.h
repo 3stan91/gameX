@@ -123,5 +123,24 @@ public:
         move(direction);
         return;
     }
+
+    bool doDamageToEnemy(Creature &creature) {
+        int a = creature.armor;
+        int d = creature.damage;
+        if (this->coordinate.x == creature.coordinate.x && this->coordinate.y == creature.coordinate.y) {
+
+            if ((creature.armor - this->damage) >= 0) {
+                creature.armor -= this->damage;
+            }
+            if ((creature.armor - this->damage) < 0) {
+                creature.armor = 0;
+                creature.damage -= (this->damage - creature.armor);
+            }
+            if (a > creature.armor || d > creature.damage)
+                return true;
+        } else
+            return false;
+    }
 };
+
 #endif
