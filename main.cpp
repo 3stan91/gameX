@@ -220,8 +220,8 @@ void updateCoordinates(std::vector<Coordinate> &coordinate, int position, Creatu
 }
 
 int main() {
-    welcome();
-    sleep(1);
+   // welcome();
+   // sleep(1);
     // system("cls");
     constexpr short countEnemies = 5;
     srand(std::time(nullptr));
@@ -257,7 +257,7 @@ int main() {
     int index = 0;
     do {
         while (index < countEnemies) {
-            enemies[index].generateDirection();
+            enemies[index].generateDirection(&player);
             updateCoordinates(dataCoordinate, index + 1, &enemies[index]);
             index++;
         }
@@ -265,7 +265,7 @@ int main() {
         showGameField(dataCreature, dataCoordinate);
         std::cin >> direction;
         //system("cls");
-        player.move(direction);
+        player.move(direction,enemies);
         updateCoordinates(dataCoordinate, 0, &player);
         showGameField(dataCreature, dataCoordinate);
 

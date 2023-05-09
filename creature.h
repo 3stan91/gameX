@@ -79,31 +79,41 @@ public:
         return;
     }
 
-    void move(char direction) {
+    void move(char direction, Creature *creature) {
         if (direction == 'w') {
             if (this->coordinate.y < 0)
                 this->coordinate.y = 0;
-            this->coordinate.y--;
+
+            if (doDamage(creature));
+            else
+                this->coordinate.y--;
         }
         if (direction == 's') {
             if (this->coordinate.y > 19)
                 this->coordinate.y = 19;
-            this->coordinate.y++;
+
+            if (doDamage(creature));
+            else
+                this->coordinate.y++;
         }
         if (direction == 'a') {
             if (this->coordinate.x < 0)
                 this->coordinate.x = 0;
-            this->coordinate.x--;
+            if (doDamage(creature));
+            else
+                this->coordinate.x--;
         }
         if (direction == 'd') {
             if (this->coordinate.x > 19)
                 this->coordinate.x = 19;
-            this->coordinate.x++;
+            if (doDamage(creature));
+            else
+                this->coordinate.x++;
         }
         return;
     }
 
-    void generateDirection() {
+    void generateDirection(Creature *creature) {
         int codeDirection = rand() % 4;
         char direction;
         switch (codeDirection) {
@@ -120,23 +130,30 @@ public:
                 direction = 'd';
                 break;
         }
-        move(direction);
+        move(direction, creature);
         return;
     }
 
-    bool doDamageToEnemy(Creature &creature) {
-        int a = creature.armor;
-        int d = creature.damage;
-        if (this->coordinate.x == creature.coordinate.x && this->coordinate.y == creature.coordinate.y) {
+    bool doDamage(Creature *creature) {
+        int a = creature->armor;
+        int d = creature->damage;
+        int h = creature->health;
 
-            if ((creature.armor - this->damage) >= 0) {
-                creature.armor -= this->damage;
+        if (this->coordinate.x == creature->coordinate.x && this->coordinate.y == creature->coordinate.y) {
+
+            if ((creature->armor - this->damage) >= 0) {
+                creature->armor -= this->damage;
             }
-            if ((creature.armor - this->damage) < 0) {
-                creature.armor = 0;
-                creature.damage -= (this->damage - creature.armor);
+            if ((creature->armor - this->damage) < 0) {
+                creature->armor = 0;
+                creature->damage -= (this->damage - creature->armor);
             }
-            if (a > creature.armor || d > creature.damage)
+            if ((creature->damage - this->damage) < 0) {
+                creature->damage = 0;
+                creature->health -= this->damage;
+            }
+
+            if (a > creature->armor || d > creature->damage || h > creature->health)
                 return true;
         } else
             return false;

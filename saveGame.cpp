@@ -4,7 +4,7 @@
 #include <string>
 
 void saveGame(Creature creature, std::string path) {
-
+/*
     if (creature.getName().find("Enemy") != std::string::npos) {
         std::ofstream fout(path, std::ios::binary | std::ios::app);
         if (fout.good()) {
@@ -31,4 +31,5 @@ void saveGame(Creature creature, std::string path) {
             throw "File \"Personage.bin\" is not access\n";
         }
     }
-}
+*/
+ }
