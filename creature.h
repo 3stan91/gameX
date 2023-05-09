@@ -55,9 +55,7 @@ public:
     }
 
     void create(char creature, int number = 0) {
-        using std::cin;
-        using std::cout;
-        srand(std::time(0));
+        using namespace std;
         if (creature == 'P') {
             // cout << "Enter a name of the game's personage\n";
             //std::getline(cin, name);
@@ -71,60 +69,64 @@ public:
             // cout << "Enter armor\n";
             // cin >> armor;
             armor = 30;
-            coordinate.x = std::rand() % 20;
-            coordinate.y = std::rand() % 20;
+            coordinate.x = rand() % 20;
+            coordinate.y = rand() % 20;
         } else {
             name = "Enemy #" + std::to_string(number + 1);
-            health = (std::rand() % 101) + 50;
-            damage = (std::rand() % 16) + 15;
-            armor = std::rand() % 51;
-            coordinate.x = std::rand() % 20;
-            coordinate.y = std::rand() % 20;
+            health = rand() % 101 + 50;
+            damage = rand() % 16 + 15;
+            armor = rand() % 51;
+            coordinate.x = rand() % 20;
+            coordinate.y = rand() % 20;
         }
         return;
     }
 
-    void move(std::vector<char> &dataCreature, Coordinate &dataCoordinate, char direction) {
+    void move(char direction) {
         if (direction == 'w') {
-            if (dataCoordinate.y < 0)
-                dataCoordinate.y = 0;
-            dataCoordinate.y--;
+            if (this->coordinate.y < 0)
+                this->coordinate.y = 0;
+            this->coordinate.y--;
         }
         if (direction == 's') {
-            if (dataCoordinate.y > 19)
-                dataCoordinate.y = 19;
-            dataCoordinate.y++;
+            if (this->coordinate.y > 19)
+                this->coordinate.y = 19;
+            this->coordinate.y++;
         }
         if (direction == 'a') {
-            if (dataCoordinate.x < 0)
-                dataCoordinate.x = 0;
-            dataCoordinate.x--;
+            if (this->coordinate.x < 0)
+                this->coordinate.x = 0;
+            this->coordinate.x--;
         }
         if (direction == 'd') {
-            if (dataCoordinate.x > 19)
-                dataCoordinate.x = 19;
-            dataCoordinate.x++;
+            if (this->coordinate.x > 19)
+                this->coordinate.x = 19;
+            this->coordinate.x++;
         }
         return;
     }
 
-    void moveEnemy(std::vector<char> &dataCreature, Coordinate &dataCoordinate) {
-        srand(static_cast<unsigned int>(time(0)));
-        int direction = rand() % 4;
-        if (direction == 0) {
-            dataCoordinate.y--;
+    void generateDirection() {
+        int codeDirection = rand() % 4;
+        char direction;
+        switch (codeDirection) {
+            case 0:
+                direction = 'w';
+                break;
+            case 1:
+                direction = 's';
+                break;
+            case 2:
+                direction = 'a';
+                break;
+            case 3:
+                direction = 'd';
+                break;
         }
-        if (direction == 1) {
-            coordinate.y++;
-        }
-        if (direction == 2) {
-            coordinate.x--;
-        }
-        if (direction == 3) {
-            coordinate.x++;
-        }
+        move(direction);
         return;
     }
+
 };
 
 #endif

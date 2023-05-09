@@ -198,9 +198,11 @@ int main() {
 #include "creature.h"
 #include <vector>
 #include <fstream>
+#include <ctime>
+#include <cstdlib>
 #include <unistd.h>
 
-void welcome();
+//void welcome();
 
 void showGameField(std::vector<char> &dataCreature, std::vector<Coordinate> &dataCoordinate);
 
@@ -213,27 +215,30 @@ inline bool isFileExist(const char *fileName) {
     return infile.good();
 }
 
+void updateCoordinates(std::vector<Coordinate> &coordinate, int position, Creature *creature) {
+    coordinate[position] = creature->coordinate;
+}
+
 int main() {
     //welcome();
     //sleep(1);
     // system("cls");
-
+    srand(std::time(0));
     Creature enemy[5];
-    if (!isFileExist("Enemies.bin")) {
-        for (int i = 0; i < 5; ++i)
-            enemy[i].create('E', i);
-    } else {
-        for (int i = 0; i < 5; ++i)
-            loadGame(enemy[i], "Enemies.bin");
-    }
+    //if (!isFileExist("Enemies.bin")) {
+    for (int i = 0; i < 5; ++i)
+        enemy[i].create('E', i);
+    // } else {
+    //     for (int i = 0; i < 5; ++i)
+    //         loadGame(enemy[i], "Enemies.bin");
+    // }
 
     Creature personage;
-    if (!isFileExist("Personage.bin")) {
-        personage.create('P');
-    } else {
-        loadGame(personage, "Personage.bin");
-    }
-
+    //  if (!isFileExist("Personage.bin")) {
+    personage.create('P');
+    //   } else {
+    //    loadGame(personage, "Personage.bin");
+    // }
 
     std::vector<char> dataCreature;
     std::vector<Coordinate> dataCoordinate;
@@ -246,17 +251,21 @@ int main() {
     }
 
     showGameField(dataCreature, dataCoordinate);
+    std::cout << "+++++++++++++++++++++++++\n";
     char key;
     int index = 0;
     do {
-        while (index < 5) {
-            enemy[index].moveEnemy(dataCreature, dataCoordinate[index + 1]);
-            showGameField(dataCreature, dataCoordinate);
+        while (index < 4) {
+            enemy[index].generateDirection();
+            updateCoordinates(dataCoordinate, index+1, &enemy[index]);
             index++;
         }
+
+        showGameField(dataCreature, dataCoordinate);
         std::cin >> key;
-        system("cls");
-        personage.move(dataCreature, dataCoordinate[0], key);
+        //system("cls");
+        personage.move(key);
+        updateCoordinates(dataCoordinate,0, &personage);
         showGameField(dataCreature, dataCoordinate);
 
         if (key = 'q') {
