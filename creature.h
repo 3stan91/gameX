@@ -3,14 +3,11 @@
 
 #include <iostream>
 #include "coordinate.h"
-#include <ctime>
 #include <cstdlib>
 #include <string>
 #include<vector>
 
-void showGameField(std::vector<char> &dataCreature, std::vector<Coordinate> &dataCoordinate);
-
-//void showGameField(Coordinate &dataCoordinate, char enemy = 'E');
+void showGameField(const std::vector<char> &creatures, std::vector<Coordinate> &coordinates);
 
 struct Creature {
 private:
@@ -126,7 +123,5 @@ public:
         move(direction);
         return;
     }
-
 };
-
 #endif

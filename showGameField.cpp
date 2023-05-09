@@ -14,15 +14,15 @@ void sort(std::vector<Coordinate> &dataCoordinate) {
         }
 }
 
-void showGameField(std::vector<char> &dataCreature, std::vector<Coordinate> &dataCoordinate) {
+void showGameField(const std::vector<char> &creatures, std::vector<Coordinate> &coordinates) {
     //system("cls");
-    sort(dataCoordinate);
+    sort(coordinates);
     int index = 0;
     std::cout<<0;
     for (int row = 0; row < 20; row++) {
         for (int col = 0; col < 20; ++col) {
-            if (dataCoordinate[index].x == col && dataCoordinate[index].y == row) {
-                std::cout << dataCreature[index];
+            if (coordinates[index].x == col && coordinates[index].y == row) {
+                std::cout << creatures[index];
                 index++;
             } else
                 std::cout << "-";

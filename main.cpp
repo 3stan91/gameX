@@ -223,13 +223,14 @@ int main() {
     //welcome();
     //sleep(1);
     // system("cls");
+    constexpr short countEnemies = 5;
     srand(std::time(0));
-    Creature enemy[5];
+    Creature enemy[countEnemies];
     //if (!isFileExist("Enemies.bin")) {
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < countEnemies; ++i)
         enemy[i].create('E', i);
     // } else {
-    //     for (int i = 0; i < 5; ++i)
+    //     for (int i = 0; i < countEnemies; ++i)
     //         loadGame(enemy[i], "Enemies.bin");
     // }
 
@@ -245,33 +246,33 @@ int main() {
 
     dataCreature.push_back('P');
     dataCoordinate.push_back(personage.coordinate);
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < countEnemies; i++) {
         dataCreature.push_back('E');
         dataCoordinate.push_back(enemy[i].coordinate);
     }
 
     showGameField(dataCreature, dataCoordinate);
     std::cout << "+++++++++++++++++++++++++\n";
-    char key;
+    char direction;
     int index = 0;
     do {
-        while (index < 4) {
+        while (index < countEnemies) {
             enemy[index].generateDirection();
-            updateCoordinates(dataCoordinate, index+1, &enemy[index]);
+            updateCoordinates(dataCoordinate, index + 1, &enemy[index]);
             index++;
         }
 
         showGameField(dataCreature, dataCoordinate);
-        std::cin >> key;
+        std::cin >> direction;
         //system("cls");
-        personage.move(key);
-        updateCoordinates(dataCoordinate,0, &personage);
+        personage.move(direction);
+        updateCoordinates(dataCoordinate, 0, &personage);
         showGameField(dataCreature, dataCoordinate);
 
-        if (key = 'q') {
+        if (direction = 'q') {
             const std::string path[]{"Enemies.bin", "Personage.bin"};
             try {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < countEnemies; i++)
                     saveGame(enemy[i], path[0]);
                 saveGame(personage, path[1]);
             }
@@ -279,7 +280,7 @@ int main() {
                 std::cerr << "Exception write file";
             }
         }
-    } while (key != 'q');
+    } while (direction != 'q');
 
     return 0;
 }
