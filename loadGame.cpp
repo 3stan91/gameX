@@ -1,10 +1,9 @@
-//#include <iostream>
 #include "creature.h"
 #include <fstream>
 #include <string>
 
 void loadGame(Creature creature, std::string path) {
-  /*  std::ifstream fin;
+    std::ifstream fin;
     fin.open(path, std::ios::binary | std::ios::in);
 
     if (fin.good()) {
@@ -33,7 +32,5 @@ void loadGame(Creature creature, std::string path) {
     }
 
     fin.close();
-    */
-    return;
 }
 

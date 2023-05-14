@@ -51,8 +51,19 @@ public:
         return armor;
     }
 
-    void create(char creature, int number = 0) {
+    void generateUniqueCoordinates(Coordinate &coordinate, std::vector<Coordinate> &generatedCoordinate, int number){
+        for (int i = 0; i < number; i++) {
+            while (coordinate.x == generatedCoordinate[i].x && coordinate.y == generatedCoordinate[i].y) {
+                coordinate.x = rand() % 20;
+                coordinate.y = rand() % 20;
+            }
+        }
+        generatedCoordinate.push_back(coordinate);
+    }
+
+    Coordinate *create(char creature, int number = 0) {
         using namespace std;
+        static vector<Coordinate> generatedCoordinate;
         if (creature == 'P') {
             // cout << "Enter a name of the game's personage\n";
             //std::getline(cin, name);
@@ -68,6 +79,7 @@ public:
             armor = 30;
             coordinate.x = rand() % 20;
             coordinate.y = rand() % 20;
+            generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         } else {
             name = "Enemy #" + std::to_string(number + 1);
             health = rand() % 101 + 50;
@@ -75,8 +87,10 @@ public:
             armor = rand() % 51;
             coordinate.x = rand() % 20;
             coordinate.y = rand() % 20;
+
+            generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         }
-        return;
+        return &coordinate;
     }
 
     void move(char direction, Creature *creature) {

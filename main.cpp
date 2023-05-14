@@ -220,24 +220,24 @@ void updateCoordinates(std::vector<Coordinate> &coordinate, int position, Creatu
 }
 
 int main() {
-   // welcome();
-   // sleep(1);
+    // welcome();
+    // sleep(1);
     // system("cls");
     constexpr short countEnemies = 5;
     srand(static_cast<unsigned int>(std::time(nullptr)));
     Creature enemies[countEnemies];
     if (!isFileExist("Enemies.bin")) {
-    for (int i = 0; i < countEnemies; ++i)
-        enemies[i].create('E', i);
-     } else {
-         for (int i = 0; i < countEnemies; ++i)
-             loadGame(enemies[i], "Enemies.bin");
+        for (int i = 0; i < countEnemies; ++i)
+            enemies[i].create('E', i);
+    } else {
+        for (int i = 0; i < countEnemies; ++i)
+            loadGame(enemies[i], "Enemies.bin");
     }
 
     Creature player;
-      if (!isFileExist("Personage.bin")) {
-    player.create('P');
-       } else {
+    if (!isFileExist("Personage.bin")) {
+        player.create('P');
+    } else {
         loadGame(player, "Personage.bin");
     }
 
@@ -265,7 +265,7 @@ int main() {
         showGameField(dataCreature, dataCoordinate);
         std::cin >> direction;
         //system("cls");
-        player.move(direction,enemies);
+        player.move(direction, enemies);
         updateCoordinates(dataCoordinate, 0, &player);
         showGameField(dataCreature, dataCoordinate);
 
