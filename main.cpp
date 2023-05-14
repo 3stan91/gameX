@@ -269,26 +269,26 @@ int main() {
                     std::cout << "You lose\n";
                     exit(EXIT_SUCCESS);
                 }
-            }
-            else
-            updateCoordinates(dataCoordinate, &enemies[index], index + 1);
+            } else
+                updateCoordinates(dataCoordinate, &enemies[index], index + 1);
             index++;
         }
 
         showGameField(dataCreature, dataCoordinate);
-
-        std::cin >> direction;
+        std::cout << "Choose direction's letter\n" << "'w'->up, 's'->down, 'a'->left, 'd'->right\n";
+        while (direction != 'w' || direction != 's' || direction != 'a' || direction != 'd'){
+            std::cin >> direction;
+        }
         //system("cls");
 
         index = 0;
         while (index < countEnemies) {
-                if (player.move(direction, enemies[index])) {
-                    if (player.strike(enemies[index]) == STATE_ENEMY::KILL) {
-                        dataCreature.erase(dataCreature.begin() + index);
-                        dataCoordinate.erase(dataCoordinate.begin() + index);
-                    }
+            if (true) {//player.move(direction, enemies[index])) {
+                if (player.strike(enemies[index]) == STATE_ENEMY::KILL) {
+                    dataCreature.erase(dataCreature.begin() + index);
+                    dataCoordinate.erase(dataCoordinate.begin() + index);
                 }
-            else
+            } else
                 updateCoordinates(dataCoordinate, &player, 0);
             index++;
         }
@@ -302,7 +302,7 @@ int main() {
                 saveGame(player, path[1]);
             }
             catch (const std::string &s) {
-                std::cerr << "Exception write file \n" + s << std::endl;
+                std::cerr << "Exception write out of the file \n" + s << std::endl;
             }
         }
     } while (direction != 'q');
