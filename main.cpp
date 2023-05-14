@@ -211,7 +211,9 @@ void move(char);
 
 void saveGame(Creature creature, std::string);
 
-void loadGame(Creature creature, std::string path);
+void loadGame(Creature &creature, const char *path);
+
+int pauseScreen(Creature& personage, Creature enemies[], int n);
 
 inline bool isFileExist(const char *fileName) {
     std::ifstream infile(fileName);
@@ -223,10 +225,10 @@ STATE_ENEMY strike(Creature &);
 void updateCoordinates(std::vector<Coordinate> &, Creature *, int);
 
 int main() {
-    // welcome();
-    // sleep(1);
-    // system("cls");
-    constexpr short countEnemies = 1;
+    welcome();
+    sleep(1);
+    //system("clear");
+    constexpr short countEnemies = 5;
     srand(static_cast<unsigned int>(std::time(nullptr)));
 
     Creature player;
@@ -275,15 +277,21 @@ int main() {
         }
 
         showGameField(dataCreature, dataCoordinate);
+
         std::cout << "Choose direction's letter\n" << "'w'->up, 's'->down, 'a'->left, 'd'->right\n";
-        while (direction != 'w' || direction != 's' || direction != 'a' || direction != 'd'){
+        std::cout << "or 'p'->pause, 'q'->quit\n";
+        std::cin >> direction;
+        while (direction != 'w' && direction != 's' && direction != 'a'
+               && direction != 'd' && direction != 'p' && direction != 'q') {
+            std::cout << "Choose direction's letter\n" << "'w'->up, 's'->down, 'a'->left, 'd'->right\n";
+            std::cout << "or 'p'->pause, 'q'->quit\n";
             std::cin >> direction;
         }
-        //system("cls");
+        // system("clear");
 
         index = 0;
         while (index < countEnemies) {
-            if (true) {//player.move(direction, enemies[index])) {
+            if (player.move(direction, enemies[index])) {
                 if (player.strike(enemies[index]) == STATE_ENEMY::KILL) {
                     dataCreature.erase(dataCreature.begin() + index);
                     dataCoordinate.erase(dataCoordinate.begin() + index);
@@ -294,7 +302,9 @@ int main() {
         }
         showGameField(dataCreature, dataCoordinate);
 
-        if (direction == 'q') {
+        if (direction == 'p') {
+            int a = pauseScreen(player,enemies, 5);
+            /*
             const std::string path[]{"Enemies.bin", "Personage.bin"};
             try {
                 for (int i = 0; i < countEnemies; i++)
@@ -303,9 +313,10 @@ int main() {
             }
             catch (const std::string &s) {
                 std::cerr << "Exception write out of the file \n" + s << std::endl;
-            }
+            } */
         }
-    } while (direction != 'q');
 
+    } while (direction != 'q');
+    std::cout << "Program finished\n";
     return 0;
 }

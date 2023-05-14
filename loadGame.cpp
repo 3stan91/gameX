@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-void loadGame(Creature creature, std::string path) {
+void loadGame(Creature &creature, const char* path) {
     std::ifstream fin;
     fin.open(path, std::ios::binary | std::ios::in);
 

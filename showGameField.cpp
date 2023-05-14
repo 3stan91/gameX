@@ -2,8 +2,6 @@
 #include "coordinate.h"
 #include <vector>
 
-#define DEBUG
-
 void sort(std::vector<Coordinate> &dataCoordinate) {
     for (int i = 0; i < dataCoordinate.size() - 1; ++i)
         for (int j = i + 1; j < dataCoordinate.size(); ++j) {
@@ -18,7 +16,7 @@ void sort(std::vector<Coordinate> &dataCoordinate) {
 
 void showGameField(const std::vector<char> &creatures, std::vector<Coordinate> &coordinates) {
     constexpr int sizeField = 20;
-    //system("cls");
+    //system("clear");
     sort(coordinates);
     int index = 0;
 
@@ -30,12 +28,8 @@ void showGameField(const std::vector<char> &creatures, std::vector<Coordinate> &
 
         for (int col = 0; col < sizeField; ++col) {
             if (coordinates[index].x == col && coordinates[index].y == row) {
-#ifdef DEBUG
-                if (creatures[index] == 'E')
-                    std::cout << creatures[index] + std::to_string(index);
-                else
-                    //std::cout << creatures[index];
-#endif
+               // if (creatures[index] == 'E')  std::cout << creatures[index] + std::to_string(index);
+               // else  std::cout << creatures[index];
                 std::cout << creatures[index];
                 index++;
             } else

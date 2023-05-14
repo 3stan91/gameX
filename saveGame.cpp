@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 
-void saveGame(Creature creature, std::string path) {
+void saveGame(Creature &creature, std::string path) {
 
     if (creature.getName().find("Enemy") != std::string::npos) {
         std::ofstream fout(path, std::ios::binary | std::ios::app);

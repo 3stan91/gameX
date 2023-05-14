@@ -72,18 +72,18 @@ public:
             // cout << "Enter armor\n";
             // cin >> armor;
             armor = 30;
-            coordinate.x = 2;//rand() % 20;
-            coordinate.y = 2;//rand() % 20;
-            // generateUniqueCoordinates(coordinate, generatedCoordinate, number);
+            coordinate.x = rand() % 20;
+            coordinate.y = rand() % 20;
+            //generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         } else {
             name = "Enemy #" + std::to_string(number + 1);
             health = rand() % 101 + 50;
             damage = rand() % 16 + 15;
             armor = rand() % 51;
-            coordinate.x = 4; //rand() % 20;
-            coordinate.y = 2; //rand() % 20;
+            coordinate.x = rand() % 20;
+            coordinate.y = rand() % 20;
 
-            // generateUniqueCoordinates(coordinate, generatedCoordinate, number);
+            generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         }
     }
 
@@ -92,7 +92,7 @@ public:
         if (direction == 'w') {
             if (this->coordinate.y < 0)
                 this->coordinate.y = 0;
-            else if (this->coordinate.x == victim.coordinate.x && (this->coordinate.y-1) == victim.coordinate.y)
+            else if (this->coordinate.x == victim.coordinate.x && (this->coordinate.y - 1) == victim.coordinate.y)
                 haveStrike = true;
             else
                 this->coordinate.y--;
@@ -101,7 +101,7 @@ public:
         if (direction == 's') {
             if (this->coordinate.y > 19)
                 this->coordinate.y = 19;
-            else if (this->coordinate.x == victim.coordinate.x && (this->coordinate.y+1) == victim.coordinate.y)
+            else if (this->coordinate.x == victim.coordinate.x && (this->coordinate.y + 1) == victim.coordinate.y)
                 haveStrike = true;
             else
                 this->coordinate.y++;
@@ -110,7 +110,7 @@ public:
         if (direction == 'a') {
             if (this->coordinate.x < 0)
                 this->coordinate.x = 0;
-            else if ((this->coordinate.x-1) == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
+            else if ((this->coordinate.x - 1) == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
                 haveStrike = true;
             else
                 this->coordinate.x--;
@@ -119,7 +119,7 @@ public:
         if (direction == 'd') {
             if (this->coordinate.x > 19)
                 this->coordinate.x = 19;
-            else if ((this->coordinate.x+1) == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
+            else if ((this->coordinate.x + 1) == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
                 haveStrike = true;
             else
                 this->coordinate.x++;
