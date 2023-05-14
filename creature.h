@@ -6,10 +6,12 @@
 #include <cstdlib>
 #include <string>
 #include<vector>
+#include "state_enemy.h"
 
 void showGameField(const std::vector<char> &, std::vector<Coordinate> &);
 
 void generateUniqueCoordinates(Coordinate &, std::vector<Coordinate> &, int);
+
 
 struct Creature {
 private:
@@ -70,25 +72,28 @@ public:
             // cout << "Enter armor\n";
             // cin >> armor;
             armor = 30;
-            coordinate.x = rand() % 20;
-            coordinate.y = rand() % 20;
+            coordinate.x = 2;//rand() % 20;
+            coordinate.y = 2;//rand() % 20;
             // generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         } else {
             name = "Enemy #" + std::to_string(number + 1);
             health = rand() % 101 + 50;
             damage = rand() % 16 + 15;
             armor = rand() % 51;
-            coordinate.x = rand() % 20;
-            coordinate.y = rand() % 20;
+            coordinate.x = 4; //rand() % 20;
+            coordinate.y = 2; //rand() % 20;
 
-            generateUniqueCoordinates(coordinate, generatedCoordinate, number);
+            // generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         }
     }
 
-    void move(char direction) {
+    bool move(char direction, Creature &victim) {
+        bool haveStrike = false;
         if (direction == 'w') {
             if (this->coordinate.y < 0)
                 this->coordinate.y = 0;
+            else if (this->coordinate.x == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
+                haveStrike = true;
             else
                 this->coordinate.y--;
         }
@@ -96,6 +101,8 @@ public:
         if (direction == 's') {
             if (this->coordinate.y > 19)
                 this->coordinate.y = 19;
+            else if (this->coordinate.x == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
+                haveStrike = true;
             else
                 this->coordinate.y++;
         }
@@ -103,6 +110,8 @@ public:
         if (direction == 'a') {
             if (this->coordinate.x < 0)
                 this->coordinate.x = 0;
+            else if (this->coordinate.x == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
+                haveStrike = true;
             else
                 this->coordinate.x--;
         }
@@ -110,12 +119,15 @@ public:
         if (direction == 'd') {
             if (this->coordinate.x > 19)
                 this->coordinate.x = 19;
+            else if (this->coordinate.x == victim.coordinate.x && this->coordinate.y == victim.coordinate.y)
+                haveStrike = true;
             else
                 this->coordinate.x++;
         }
+        return haveStrike;
     }
 
-    char generateDirection(Creature *creature) {
+    char generateDirection() {
         int codeDirection = rand() % 4;
         char direction;
         switch (codeDirection) {
@@ -134,5 +146,32 @@ public:
         }
         return direction;
     }
+
+    STATE_ENEMY strike(Creature &victim) {
+        STATE_ENEMY state;
+
+        if ((victim.getArmor() - this->getDamage()) > 0) {
+            victim.setArmor(victim.getArmor() - this->getDamage());
+            state = STATE_ENEMY::DAMAGE;
+
+        } else if ((victim.getDamage() - this->getDamage()) > 0) {
+            victim.setArmor(0);
+            victim.setDamage(victim.getDamage() - this->getDamage());
+            state = STATE_ENEMY::DAMAGE;
+
+        } else if ((victim.getHealth() - this->getDamage()) > 0) {
+            victim.setDamage(0);
+            victim.setHealth(victim.getHealth() - this->getDamage());
+            state = STATE_ENEMY::DAMAGE;
+
+        } else {
+            victim.setHealth(0);
+            state = STATE_ENEMY::KILL;
+        }
+
+        return state;
+    }
+
 };
+
 #endif

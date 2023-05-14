@@ -97,8 +97,8 @@ build CMakeFiles/StrustProject.dir/updateCoordinates.cpp.obj: CXX_COMPILER__Stru
   OBJECT_DIR = CMakeFiles\StrustProject.dir
   OBJECT_FILE_DIR = CMakeFiles\StrustProject.dir
 
-build CMakeFiles/StrustProject.dir/doPlayerDamage.cpp.obj: CXX_COMPILER__StrustProject_Debug C$:/Users/Alexander/CLionProjects/StrustProject/doPlayerDamage.cpp || cmake_object_order_depends_target_StrustProject
-  DEP_FILE = CMakeFiles\StrustProject.dir\doPlayerDamage.cpp.obj.d
+build CMakeFiles/StrustProject.dir/stateEnemy.cpp.obj: CXX_COMPILER__StrustProject_Debug C$:/Users/Alexander/CLionProjects/StrustProject/stateEnemy.cpp || cmake_object_order_depends_target_StrustProject
+  DEP_FILE = CMakeFiles\StrustProject.dir\stateEnemy.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\StrustProject.dir
   OBJECT_FILE_DIR = CMakeFiles\StrustProject.dir
@@ -111,7 +111,7 @@ build CMakeFiles/StrustProject.dir/doPlayerDamage.cpp.obj: CXX_COMPILER__StrustP
 #############################################
 # Link the executable StrustProject.exe
 
-build StrustProject.exe: CXX_EXECUTABLE_LINKER__StrustProject_Debug CMakeFiles/StrustProject.dir/main.cpp.obj CMakeFiles/StrustProject.dir/welcome.cpp.obj CMakeFiles/StrustProject.dir/showGameField.cpp.obj CMakeFiles/StrustProject.dir/loadGame.cpp.obj CMakeFiles/StrustProject.dir/saveGame.cpp.obj CMakeFiles/StrustProject.dir/pauseScreen.cpp.obj CMakeFiles/StrustProject.dir/generateUniqueCoordinates.cpp.obj CMakeFiles/StrustProject.dir/updateCoordinates.cpp.obj CMakeFiles/StrustProject.dir/doPlayerDamage.cpp.obj
+build StrustProject.exe: CXX_EXECUTABLE_LINKER__StrustProject_Debug CMakeFiles/StrustProject.dir/main.cpp.obj CMakeFiles/StrustProject.dir/welcome.cpp.obj CMakeFiles/StrustProject.dir/showGameField.cpp.obj CMakeFiles/StrustProject.dir/loadGame.cpp.obj CMakeFiles/StrustProject.dir/saveGame.cpp.obj CMakeFiles/StrustProject.dir/pauseScreen.cpp.obj CMakeFiles/StrustProject.dir/generateUniqueCoordinates.cpp.obj CMakeFiles/StrustProject.dir/updateCoordinates.cpp.obj CMakeFiles/StrustProject.dir/stateEnemy.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\StrustProject.dir

@@ -201,6 +201,7 @@ int main() {
 #include <ctime>
 #include <cstdlib>
 #include <unistd.h>
+#include "state_enemy.h"
 
 void welcome();
 
@@ -217,15 +218,15 @@ inline bool isFileExist(const char *fileName) {
     return infile.good();
 }
 
-bool doPlayerDamage(Creature *, Creature *);
+STATE_ENEMY strike(Creature &);
 
-void updateCoordinates(std::vector<Coordinate> & , Creature * , int );
+void updateCoordinates(std::vector<Coordinate> &, Creature *, int);
 
 int main() {
     // welcome();
     // sleep(1);
     // system("cls");
-    constexpr short countEnemies = 5;
+    constexpr short countEnemies = 1;
     srand(static_cast<unsigned int>(std::time(nullptr)));
 
     Creature player;
@@ -257,32 +258,43 @@ int main() {
     showGameField(dataCreature, dataCoordinate);
     std::cout << std::endl;
     char direction;
-    int index = 0;
     do {
+        std::cout << "Press 'q' to quit from program\n";
+        int index = 0;
         while (index < countEnemies) {
-            direction = enemies[index].generateDirection(&player);
-            enemies[index].move(direction);
-            if (doPlayerDamage(&enemies[index], &player)) {
-                std::cout << "Game is over\n";
-                std::cout << "Your personage is killed\n";
-                std::cout << "You lose\n";
-                exit(EXIT_SUCCESS);
+            if (enemies[index].move(enemies[index].generateDirection(), player)) {
+                if (enemies[index].strike(player) == STATE_ENEMY::KILL) {
+                    std::cout << "Game is over\n";
+                    std::cout << "Your personage is killed\n";
+                    std::cout << "You lose\n";
+                    exit(EXIT_SUCCESS);
+                }
             }
+            else
             updateCoordinates(dataCoordinate, &enemies[index], index + 1);
             index++;
         }
 
         showGameField(dataCreature, dataCoordinate);
+
         std::cin >> direction;
         //system("cls");
-        player.move(direction);
-        if (doPlayerDamage(&player, enemies)) {
 
+        index = 0;
+        while (index < countEnemies) {
+                if (player.move(direction, enemies[index])) {
+                    if (player.strike(enemies[index]) == STATE_ENEMY::KILL) {
+                        dataCreature.erase(dataCreature.begin() + index);
+                        dataCoordinate.erase(dataCoordinate.begin() + index);
+                    }
+                }
+            else
+                updateCoordinates(dataCoordinate, &player, 0);
+            index++;
         }
-        updateCoordinates(dataCoordinate, &player, 0);
         showGameField(dataCreature, dataCoordinate);
 
-        if (direction = 'q') {
+        if (direction == 'q') {
             const std::string path[]{"Enemies.bin", "Personage.bin"};
             try {
                 for (int i = 0; i < countEnemies; i++)

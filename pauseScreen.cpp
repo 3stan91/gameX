@@ -40,4 +40,5 @@ int pauseScreen(Creature creature[]) {
         default:
             std::cerr << "You chose a wrong operation\n";
     }
+    return 0;
 }
