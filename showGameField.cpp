@@ -22,9 +22,9 @@ void showGameField(const std::vector<char> &creatures, std::vector<Coordinate> &
 
     for (int row = 0; row < sizeField; row++) {
         if (row < 10)
-            std::cout << row + 1 << "  ";
+            std::cout << row + 1 << "   ";
         else
-            std::cout << row + 1 << ' ';
+            std::cout << row + 1 << "  ";
 
         for (int col = 0; col < sizeField; ++col) {
             if (coordinates[index].x == col && coordinates[index].y == row) {

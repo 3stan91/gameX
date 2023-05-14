@@ -7,7 +7,9 @@
 #include <string>
 #include<vector>
 
-void showGameField(const std::vector<char> &creatures, std::vector<Coordinate> &coordinates);
+void showGameField(const std::vector<char> &, std::vector<Coordinate> &);
+
+void generateUniqueCoordinates(Coordinate &, std::vector<Coordinate> &, int);
 
 struct Creature {
 private:
@@ -51,17 +53,8 @@ public:
         return armor;
     }
 
-    void generateUniqueCoordinates(Coordinate &coordinate, std::vector<Coordinate> &generatedCoordinate, int number){
-        for (int i = 0; i < number; i++) {
-            while (coordinate.x == generatedCoordinate[i].x && coordinate.y == generatedCoordinate[i].y) {
-                coordinate.x = rand() % 20;
-                coordinate.y = rand() % 20;
-            }
-        }
-        generatedCoordinate.push_back(coordinate);
-    }
 
-    Coordinate *create(char creature, int number = 0) {
+    void create(char creature, int number = 0) {
         using namespace std;
         static vector<Coordinate> generatedCoordinate;
         if (creature == 'P') {
@@ -79,7 +72,7 @@ public:
             armor = 30;
             coordinate.x = rand() % 20;
             coordinate.y = rand() % 20;
-            generateUniqueCoordinates(coordinate, generatedCoordinate, number);
+            // generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         } else {
             name = "Enemy #" + std::to_string(number + 1);
             health = rand() % 101 + 50;
@@ -90,43 +83,39 @@ public:
 
             generateUniqueCoordinates(coordinate, generatedCoordinate, number);
         }
-        return &coordinate;
     }
 
     void move(char direction, Creature *creature) {
         if (direction == 'w') {
             if (this->coordinate.y < 0)
                 this->coordinate.y = 0;
-
-            if (doDamage(creature));
             else
                 this->coordinate.y--;
         }
+
         if (direction == 's') {
             if (this->coordinate.y > 19)
                 this->coordinate.y = 19;
-
-            if (doDamage(creature));
             else
                 this->coordinate.y++;
         }
+
         if (direction == 'a') {
             if (this->coordinate.x < 0)
                 this->coordinate.x = 0;
-            if (doDamage(creature));
             else
                 this->coordinate.x--;
         }
+
         if (direction == 'd') {
             if (this->coordinate.x > 19)
                 this->coordinate.x = 19;
-            if (doDamage(creature));
             else
                 this->coordinate.x++;
         }
     }
 
-    void generateDirection(Creature *creature) {
+    char generateDirection(Creature *creature) {
         int codeDirection = rand() % 4;
         char direction;
         switch (codeDirection) {
@@ -143,33 +132,7 @@ public:
                 direction = 'd';
                 break;
         }
-        move(direction, creature);
-    }
-
-    bool doDamage(Creature *creature) {
-        int a = creature->armor;
-        int d = creature->damage;
-        int h = creature->health;
-
-        if (this->coordinate.x == creature->coordinate.x && this->coordinate.y == creature->coordinate.y) {
-
-            if ((creature->armor - this->damage) >= 0) {
-                creature->armor -= this->damage;
-            }
-            if ((creature->armor - this->damage) < 0) {
-                creature->armor = 0;
-                creature->damage -= (this->damage - creature->armor);
-            }
-            if ((creature->damage - this->damage) < 0) {
-                creature->damage = 0;
-                creature->health -= this->damage;
-            }
-
-            if (a > creature->armor || d > creature->damage || h > creature->health)
-                return true;
-        } else
-            return false;
+        return direction;
     }
 };
-
 #endif

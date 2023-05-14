@@ -8,21 +8,27 @@ void saveGame(Creature creature, std::string path) {
     if (creature.getName().find("Enemy") != std::string::npos) {
         std::ofstream fout(path, std::ios::binary | std::ios::app);
         if (fout.good()) {
-            fout.write(creature.getName().c_str(), sizeof(creature.getName()))<<std::endl;                             //name
-            fout.write((char *) creature.getHealth(), sizeof(creature.getHealth()))<<std::endl;  //health
-            fout.write((char *) creature.getDamage(), sizeof(creature.getDamage()))<<std::endl;   //damage
-            fout.write((char *) creature.getArmor(), sizeof(creature.getArmor()))<<std::endl;
-            fout.write((char *) creature.coordinate.x, sizeof(creature.coordinate.x))<<std::endl;
-            fout.write((char *) creature.coordinate.y, sizeof(creature.coordinate.y))<<std::endl;
+            fout.write(creature.getName().c_str(), sizeof(creature.getName()))<<std::endl;
+            int armor = creature.getArmor();
+            int damage = creature.getDamage();
+            int health = creature.getHealth();
+            fout.write((char *) &armor, sizeof(armor))<<std::endl;
+            fout.write((char *) &damage, sizeof(damage))<<std::endl;
+            fout.write((char *) &health, sizeof(health))<<std::endl;
+            fout.write((char *) &creature.coordinate.x, sizeof(creature.coordinate.x))<<std::endl;
+            fout.write((char *) &creature.coordinate.y, sizeof(creature.coordinate.y))<<std::endl;
         } else
             throw "File \"Enemies.bin\" is not access\n";
     } else {
         std::ofstream fout(path, std::ios::binary);
         if (fout.good()) {
             fout << creature.getName()<<std::endl;
-            fout << creature.getHealth()<<std::endl;
-            fout << creature.getDamage()<<std::endl;
-            fout << creature.getArmor()<<std::endl;
+            int armor = creature.getArmor();
+            int damage = creature.getDamage();
+            int health = creature.getHealth();
+            fout.write((char *) &armor, sizeof(armor))<<std::endl;
+            fout.write((char *) &damage, sizeof(damage))<<std::endl;
+            fout.write((char *) &health, sizeof(health))<<std::endl;
             fout << creature.coordinate.x<<std::endl;
             fout << creature.coordinate.y<<std::endl;
             fout.close();
