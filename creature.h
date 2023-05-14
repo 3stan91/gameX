@@ -85,7 +85,7 @@ public:
         }
     }
 
-    void move(char direction, Creature *creature) {
+    void move(char direction) {
         if (direction == 'w') {
             if (this->coordinate.y < 0)
                 this->coordinate.y = 0;

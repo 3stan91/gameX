@@ -15,8 +15,9 @@ bool doPlayerDamage(Creature *hunter, Creature *victim) {
         }
     }
 
-    if (victim->getHealth() == 0 && victim->getDamage() == 0 && victim->getArmor() == 0)
+    if (victim->getArmor() == 0 && victim->getDamage() == 0 && victim->getHealth() == 0)
         return true;
     else
         return false;
 }
+

@@ -206,7 +206,7 @@ void welcome();
 
 void showGameField(const std::vector<char> &dataCreature, std::vector<Coordinate> &dataCoordinate);
 
-void move(char, Creature *);
+void move(char);
 
 void saveGame(Creature creature, std::string);
 
@@ -219,7 +219,7 @@ inline bool isFileExist(const char *fileName) {
 
 bool doPlayerDamage(Creature *, Creature *);
 
-void updateCoordinates(std::vector<Coordinate> &, int, Creature *);
+void updateCoordinates(std::vector<Coordinate> & , Creature * , int );
 
 int main() {
     // welcome();
@@ -244,8 +244,8 @@ int main() {
             loadGame(enemies[i], "Enemies.bin");
     }
 
-    std::vector<char> dataCreature;
-    std::vector<Coordinate> dataCoordinate;
+    static std::vector<char> dataCreature;
+    static std::vector<Coordinate> dataCoordinate;
 
     dataCreature.push_back('P');
     dataCoordinate.push_back(player.coordinate);
@@ -260,23 +260,26 @@ int main() {
     int index = 0;
     do {
         while (index < countEnemies) {
-            char direction = enemies[index].generateDirection(&player);
-            enemies[index].move(direction, &player);
+            direction = enemies[index].generateDirection(&player);
+            enemies[index].move(direction);
             if (doPlayerDamage(&enemies[index], &player)) {
                 std::cout << "Game is over\n";
                 std::cout << "Your personage is killed\n";
                 std::cout << "You lose\n";
                 exit(EXIT_SUCCESS);
             }
-            updateCoordinates(dataCoordinate, index + 1, &enemies[index]);
+            updateCoordinates(dataCoordinate, &enemies[index], index + 1);
             index++;
         }
 
         showGameField(dataCreature, dataCoordinate);
         std::cin >> direction;
         //system("cls");
-        player.move(direction, enemies);
-        updateCoordinates(dataCoordinate, 0, &player);
+        player.move(direction);
+        if (doPlayerDamage(&player, enemies)) {
+
+        }
+        updateCoordinates(dataCoordinate, &player, 0);
         showGameField(dataCreature, dataCoordinate);
 
         if (direction = 'q') {
