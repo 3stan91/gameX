@@ -1,0 +1,9 @@
+#ifndef STRUSTPROJECT_STATE_ENEMY_H
+#define STRUSTPROJECT_STATE_ENEMY_H
+
+enum class STATE_ENEMY{
+    KILL, DAMAGE
+};
+
+#endif
+
